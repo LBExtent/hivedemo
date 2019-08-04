@@ -3,8 +3,8 @@ version: "3"
 services:
   server:
     build:
-      context: ./server
-      dockerfile: Dockerfile
+      context: ../server
+      dockerfile: .docker/Dockerfile.dev
     expose:
       - 4000
     environment:
@@ -18,7 +18,7 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - ./server/src:/app/server/src
+      - ../server/src:/app/server/src
     command: nodemon -L src/index.js
     links:
       - db
@@ -26,8 +26,8 @@ services:
 
   client:
     build:
-      context: ./client
-      dockerfile: Dockerfile
+      context: ../client
+      dockerfile: .docker/Dockerfile.dev
     environment:
       - REACT_APP_PORT=3000
       - CHOKIDAR_USEPOLLING=true
@@ -36,8 +36,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./client/src:/app/client/src
-      - ./client/public:/app/client/public
+      - ../client/src:/app/client/src
+      - ../client/public:/app/client/public
     links:
       - server
     command: npm run start

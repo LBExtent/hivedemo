@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "proxy": "http://localhost:4000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
+  "proxy": "http://server:4000",
   "author": "Laksh",
   "license": "ISC",
   "dependencies": {

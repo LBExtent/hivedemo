@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -20,24 +20,28 @@ function MadeWithLove() {
 export default function App() {
   const [item, setItem] = useState();
 
-  async () => {
-    try {
-      const res = await axios.get("/welcome");
-      console.log(res);
-      setItem(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("/welcome");
+        console.log(res);
+        setItem(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Container maxWidth="sm">
       <Box my={4}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Create React App v4-beta example with TypeScript
+          Docker exmaple using React {item}
         </Typography>
         <MadeWithLove />
-        <div>{item}</div>
+        {console.log(item)}
       </Box>
     </Container>
   );

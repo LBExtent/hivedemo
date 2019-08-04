@@ -40,7 +40,7 @@ app.get("/welcome", async (req, res) => {
   const user = await User.find().exec();
   console.log(user[0].name);
   res.send(
-    `Hello Client! There is one record in the database for ${user[0].name}`
+    `Hello friend! There is one record in the database for the user called: ${user[0].name}`
   );
 });
 
