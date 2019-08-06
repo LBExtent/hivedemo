@@ -25,6 +25,6 @@ blocks:
           commands:
             - checkout
             - docker-compose -v
-            - docker-compose --project-name main .docker/docker-compose.dev.yml build
+            - docker-compose -p main -f .docker/docker-compose.dev.yml build
             - docker tag main "${ECR_REGISTRY}:${SEMAPHORE_GIT_SHA:0:7}"
             - docker push "${ECR_REGISTRY}:${SEMAPHORE_GIT_SHA:0:7}"
