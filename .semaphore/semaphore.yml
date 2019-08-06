@@ -19,7 +19,6 @@ blocks:
         - name: Main
           commands:
             - checkout
-            - ls
             - docker-compose -f .docker/docker-compose.dev.yml build
 
   - name: "Unit tests"
@@ -27,6 +26,7 @@ blocks:
       jobs:
         - name: Unit
           commands:
+            - checkout
             - echo "Running unit tests"
 
   - name: "E2E tests"
