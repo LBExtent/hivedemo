@@ -1,47 +1,45 @@
 version: v1.0
-name: Hello Semaphore
+name: Hive Demo
 agent:
   machine:
     type: e1-standard-2
-  containers:
-    - name: main
-      image: semaphoreci/node:12.4.0
-    - name: cache
-      image: redis:5.0
+    os_image: ubuntu1804
 blocks:
-  - name: "Set things up"
+  - name: "Setup"
     task:
       jobs:
         - name: Compile
           commands:
             - checkout
             - echo "Linting code"
-            - echo "Compiling code"
+
+  - name: Build
+    task:
+      jobs:
+        - name: Main
+          commands:
+            - set -a && source .docker/.env && docker-compose -f .docker/docker-compose.test.yml build
+
   - name: "Unit tests"
     task:
       jobs:
         - name: Unit
           commands:
-            - checkout
             - echo "Running unit tests"
+
   - name: "E2E tests"
     task:
       prologue:
         commands:
           - checkout
       jobs:
-        - name: "Integration tests"
+        - name: "Integration"
           commands:
             - echo "Running integration tests"
-        - name: "Performance tests"
+        - name: "Performance"
           commands:
             - echo "Running performance tests"
-  - name: Docker-based example
-    task:
-      jobs:
-        - name: Hello
-          commands:
-            - node -p '"evol".split("").reverse().join("")'
-            - apt-get -y update && apt-get install redis-tools
-            - redis-cli -h cache "KEYS *"
-            - checkout
+
+promotions:
+  - name: Publish
+    pipeline_file: aws_publish.yml

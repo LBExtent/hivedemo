@@ -1,0 +1,28 @@
+version: "v1.0"
+name: Publish to ECR
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: "Push Image"
+    task:
+      env_vars:
+        - name: AWS_DEFAULT_REGION
+          value: eu-west-2
+        - name: ECR_REGISTRY
+          value: 064206272832.dkr.ecr.eu-west-2.amazonaws.com/hivedemo
+      secrets:
+        - name: AWS
+      prologue:
+        commands:
+          - sudo pip install awscli
+          - checkout
+          - aws ecr get-login --no-include-email | bash
+      jobs:
+        - name: Push Image
+          commands:
+            - docker-compose up
+            - docker tag example "${ECR_REGISTRY}:${SEMAPHORE_GIT_SHA:0:7}"
+            - docker push "${ECR_REGISTRY}:${SEMAPHORE_GIT_SHA:0:7}"
