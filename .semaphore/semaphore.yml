@@ -18,7 +18,7 @@ blocks:
       jobs:
         - name: Main
           commands:
-            - pwd
+            - cd .. && pwd
             - docker-compose -f .docker/docker-compose.dev.yml build
 
   - name: "Unit tests"
