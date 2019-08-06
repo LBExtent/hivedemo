@@ -18,7 +18,7 @@ blocks:
       jobs:
         - name: Main
           commands:
-            - set -a && source .docker/.env && docker-compose -f .docker/docker-compose.test.yml build
+            - set -a && source ../.docker/.env && docker-compose -f ../.docker/docker-compose.test.yml build
 
   - name: "Unit tests"
     task:
