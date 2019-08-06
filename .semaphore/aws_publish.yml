@@ -23,6 +23,8 @@ blocks:
       jobs:
         - name: Push Image
           commands:
-            - docker images
+            - checkout
+            - docker-compose -v
+            - docker-compose --project-name main .docker/docker-compose.dev.yml build
             - docker tag main "${ECR_REGISTRY}:${SEMAPHORE_GIT_SHA:0:7}"
             - docker push "${ECR_REGISTRY}:${SEMAPHORE_GIT_SHA:0:7}"
